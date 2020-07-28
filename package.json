@@ -1,0 +1,29 @@
+{
+  "name": "teamkeeper",
+  "version": "1.0.0",
+  "description": "A app to keep track of dev teams.",
+  "main": "index.js",
+  "dependencies": {
+    "inquirer": "^7.3.3",
+    "jest": "^26.1.0",
+    "util": "^0.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tedpedersen/teamkeeper.git"
+  },
+  "keywords": [
+    "node",
+    "html"
+  ],
+  "author": "Ted Pedersen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tedpedersen/teamkeeper/issues"
+  },
+  "homepage": "https://github.com/tedpedersen/teamkeeper#readme"
+}
