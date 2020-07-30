@@ -3,6 +3,8 @@ var inquirer = require('inquirer');
 const fs = require('fs');
 const util = require('util');
 
+var employeeArray = new Array;
+
 class Employee{
     constructor(name, id, email, role){
         this.name = name;
@@ -104,8 +106,7 @@ function promptUser() {
         message: 'Would you like to enter another employee? (just hit enter for YES)?',
         default: true,
         },
-    ]);
-
+    ])
 }
 
 
@@ -156,15 +157,17 @@ async function init() {
     try {
         const response = await promptUser();
 
-        const html = generateHtml(response);
-        if (response.askAgain === false){
+        employeeArray.push(response);
 
-        await writeFile("output/index.html", html);
+        // const html = generateHtml(response);
+        if (response.askAgain === false){
+            console.log(employeeArray);
+        // await writeFile("output/index.html", html);
         console.log("Success! Your team's index.html file has been created in the /output/ dir.");
-        console.log(response);
         }
         else{
-            promptUser();
+            console.log(employeeArray);
+            init();
         }
     } catch (err){
         console.log(err);
