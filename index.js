@@ -63,20 +63,6 @@ class Intern extends Employee{
     }
 }
 
-// inquirer
-//   .prompt({
-//     type: 'text',
-//     name: 'name',
-//     message: 'What is your name?'
-//   })
-//   // destructure name from the prompt object
-//   .then(({ name }) => {
-//     this.player = new Player(name);
-
-//     // test the object creation
-//     console.log(this.currentEnemy, this.player);
-//   });
-
 //user questions
 function promptUser() {
     return inquirer.prompt([
@@ -108,7 +94,6 @@ function promptUser() {
         },
     ])
 }
-
 
 const generateHtml = (employeeArray) => {
     // let theName = new Employee(employeeArray.response.name);
@@ -152,7 +137,6 @@ ${card}
 </html>`
 }
 
-
 //create the html file after questions
 const writeFile = util.promisify(fs.writeFile);
 
@@ -179,6 +163,5 @@ async function init() {
         console.log(err);
     }
 }
-
 
 init();
