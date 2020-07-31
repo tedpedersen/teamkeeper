@@ -110,16 +110,20 @@ function promptUser() {
 }
 
 
-const generateHtml = (response) => {
-    let theName = new Employee(response.name);
-    let name = theName.name;
+const generateHtml = (employeeArray) => {
+    // let theName = new Employee(employeeArray.response.name);
+    // let name = theName.name;
 
-
-    var card = `<div class="uk-card uk-card-default uk-card-body uk-width-1-2@m">
-<h3 class="uk-card-title">${response.role}</h3>
-<p>Name: ${name}</p>
-<p>Email <a href="mailto:${response.email}">${response.email}</a></p></div>`
-
+    //create a card for each employee
+    var i;
+    for(i = 0;i < employeeArray.length; i++){
+        console.log(i);
+        console.log(employeeArray);
+        var card = `<div class="uk-card uk-card-default uk-card-body uk-width-1-2@m">
+        <h3 class="uk-card-title">${employeeArray[i].role}</h3>
+        <p>Name: ${employeeArray[i].name}</p>
+        <p>Email <a href="mailto:${employeeArray[i].email}">${employeeArray[i].email}</a></p></div>`
+    }
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -148,6 +152,7 @@ ${card}
 </html>`
 }
 
+
 //create the html file after questions
 const writeFile = util.promisify(fs.writeFile);
 
@@ -157,12 +162,13 @@ async function init() {
     try {
         const response = await promptUser();
 
+        //push answers to array
         employeeArray.push(response);
 
-        // const html = generateHtml(response);
+        //return to questions or finish
         if (response.askAgain === false){
-            console.log(employeeArray);
-        // await writeFile("output/index.html", html);
+        const html = generateHtml(employeeArray);
+        await writeFile("output/index.html", html);
         console.log("Success! Your team's index.html file has been created in the /output/ dir.");
         }
         else{

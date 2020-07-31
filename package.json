@@ -8,7 +8,8 @@
     "util": "^0.12.3"
   },
   "devDependencies": {
-    "jest": "^26.2.1"
+    "jest": "^26.2.1",
+    "nodemon": "^2.0.4"
   },
   "scripts": {
     "test": "test"
