@@ -67,7 +67,7 @@ class Intern extends Employee{
 function promptUser() {
     return inquirer.prompt([
         {
-        type: "checkbox",
+        type: "list",
         message: "Please select a employee role:",
         choices: [
             "Manager",
@@ -79,12 +79,30 @@ function promptUser() {
         {
         type: 'input',
         name: 'name',
-        message: 'Please enter the employee name:',
+        message: 'Please enter their name:',
+        },
+        {
+        type: "input",
+        name: "github",
+        message: "Enter a GitHub URL for the engineer:",
+        when: (response) => response.role === 'Engineer', 
+        },
+        {
+        type: "input",
+        name: "school",
+        message: "Enter the school attended by the intern:",
+        when: (response) => response.role === 'Intern', 
+        },
+        {
+        type: "input",
+        name: "phone",
+        message: "Enter a office number for the manager:",
+        when: (response) => response.role === 'Manager', 
         },
         {
         type: 'input',
         name: 'email',
-        message: 'Please enter the employee email address:',
+        message: 'Enter their email address:',
         },
         {
         type: 'confirm',
@@ -100,17 +118,25 @@ const generateHtml = (employeeArray) => {
     // let name = theName.name;
 
     //create a card for each employee
+    var cardsArray = new Array;
     var i;
     for(i = 0;i < employeeArray.length; i++){
-        console.log(i);
-        console.log(employeeArray);
-        var card = `<div class="uk-card uk-card-default uk-card-body uk-width-1-2@m">
+        
+        var cards = `<div><div class="uk-card uk-card-default uk-card-body uk-card-hover">
         <h3 class="uk-card-title">${employeeArray[i].role}</h3>
         <p>Name: ${employeeArray[i].name}</p>
-        <p>Email <a href="mailto:${employeeArray[i].email}">${employeeArray[i].email}</a></p></div>`
+        <p>Email: <a href="mailto:${employeeArray[i].email}">${employeeArray[i].email}</a></p>
+        <p>${employeeArray[i].github ? "Github: " + employeeArray[i].github  : ""}
+        ${employeeArray[i].school ? "School: " + employeeArray[i].school  : ""}
+        ${employeeArray[i].phone ? "Office Phone: " + employeeArray[i].phone  : ""}
+        </p>
+        </div></div>`
+
+        cardsArray.push(cards);
+        console.log(cardsArray);
     }
 
-    return `<!DOCTYPE html>
+    var begin = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -128,13 +154,32 @@ const generateHtml = (employeeArray) => {
 </nav>
 <main class="uk-container">
 <br />
-${card}
-</main>
+<div class="uk-child-width-1-2@s uk-grid-match" uk-grid id="cardContainer">`
+ var end = `</div></main>
 <!-- UIkit JS -->
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script>
+//lint the output html
+$("#cardContainer").each(function(){
+   $(this).html($(this).html().replace(/,/g , ''));
+});
+//color based on role
+$("h3").filter(function() {
+return $(this).text() === "Manager";
+}).css("color", "red");
+$("h3").filter(function() {
+return $(this).text() === "Engineer";
+}).css("color", "dodgerblue");
+$("h3").filter(function() {
+return $(this).text() === "Intern";
+}).css("color", "green");
+</script>
 </body>
 </html>`
+return begin + cardsArray + end;
 }
 
 //create the html file after questions
@@ -156,7 +201,6 @@ async function init() {
         console.log("Success! Your team's index.html file has been created in the /output/ dir.");
         }
         else{
-            console.log(employeeArray);
             init();
         }
     } catch (err){
