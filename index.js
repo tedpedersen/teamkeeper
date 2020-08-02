@@ -5,64 +5,6 @@ const util = require('util');
 
 var employeeArray = new Array;
 
-class Employee{
-    constructor(name, id, email, role){
-        this.name = name;
-        this.id = id;
-        this.email = email;
-        this.role = role;
-    }
-
-    getName(){
-        return this.name;
-    }
-
-    getId(){
-        return this.id;
-    }
-
-    getEmail(){
-        return this.email;
-    }
-
-    getRole(){
-        return this.role;
-    }
-}
-
-class Manager extends Employee{
-    constructor(officeNumber){
-        this.officeNumber = officeNumber;
-    }
-    getRole(){
-        return "Manager";
-    }  
-}
-
-class Engineer extends Employee{
-    constructor(github){
-        this.github = github;
-    }
-    getGithub(){
-        return this.github;
-    }
-    getRole(){
-        return "Engineer";
-    }  
-}
-
-class Intern extends Employee{
-    constructor(school){
-        this.school = school;
-    }
-    getSchool(){
-        return this.school;
-    }
-    getRole(){
-        return "Intern";
-    }
-}
-
 //user questions
 function promptUser() {
     return inquirer.prompt([
@@ -80,6 +22,11 @@ function promptUser() {
         type: 'input',
         name: 'name',
         message: 'Please enter their name:',
+        },
+        {
+        type: 'input',
+        name: 'uid',
+        message: 'Please enter their employee id number:',
         },
         {
         type: "input",
@@ -121,10 +68,10 @@ const generateHtml = (employeeArray) => {
     var cardsArray = new Array;
     var i;
     for(i = 0;i < employeeArray.length; i++){
-        
         var cards = `<div><div class="uk-card uk-card-default uk-card-body uk-card-hover">
         <h3 class="uk-card-title">${employeeArray[i].role}</h3>
         <p>Name: ${employeeArray[i].name}</p>
+        <p>ID#: ${employeeArray[i].uid}</p>
         <p>Email: <a href="mailto:${employeeArray[i].email}">${employeeArray[i].email}</a></p>
         <p>${employeeArray[i].github ? "Github: " + employeeArray[i].github  : ""}
         ${employeeArray[i].school ? "School: " + employeeArray[i].school  : ""}
@@ -197,8 +144,8 @@ async function init() {
         //return to questions or finish
         if (response.askAgain === false){
         const html = generateHtml(employeeArray);
-        await writeFile("output/index.html", html);
-        console.log("Success! Your team's index.html file has been created in the /output/ dir.");
+        await writeFile("dist/index.html", html);
+        console.log("Success! Your team's index.html file has been created in the /dist/ dir.");
         }
         else{
             init();
