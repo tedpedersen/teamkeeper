@@ -61,26 +61,26 @@ function promptUser() {
 }
 
 const generateHtml = (employeeArray) => {
-    // let theName = new Employee(employeeArray.response.name);
-    // let name = theName.name;
 
     //create a card for each employee
     var cardsArray = new Array;
+
     var i;
     for(i = 0;i < employeeArray.length; i++){
+        // var githubLink = employeeArray[i].github;
         var cards = `<div><div class="uk-card uk-card-default uk-card-body uk-card-hover">
         <h3 class="uk-card-title">${employeeArray[i].role}</h3>
         <p>Name: ${employeeArray[i].name}</p>
         <p>ID#: ${employeeArray[i].uid}</p>
         <p>Email: <a href="mailto:${employeeArray[i].email}">${employeeArray[i].email}</a></p>
-        <p>${employeeArray[i].github ? "Github: " + employeeArray[i].github  : ""}
+        <p>${employeeArray[i].github ? "Github: " + `<a href="${employeeArray[i].github}">${employeeArray[i].github}</a>` : ""}
         ${employeeArray[i].school ? "School: " + employeeArray[i].school  : ""}
         ${employeeArray[i].phone ? "Office Phone: " + employeeArray[i].phone  : ""}
         </p>
         </div></div>`
 
         cardsArray.push(cards);
-        console.log(cardsArray);
+        // console.log(cardsArray);
     }
 
     var begin = `<!DOCTYPE html>

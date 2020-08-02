@@ -1,7 +1,7 @@
 const Employee = require("../lib/Employee");
 
 test('creates a employee object', () => {
-    const someNew = new Employee("TheName", 200, "email@email.com", "Intern", "UC Davi")
+    const someNew = new Employee("TheName", 200, "email@email.com", "Intern")
   
     // create a test that checks if the name is a string
     expect(someNew.name).toEqual(expect.any(String))
